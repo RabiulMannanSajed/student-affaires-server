@@ -30,6 +30,9 @@ async function run() {
     const userInfosCollection = client
       .db("student-affairs")
       .collection("userInfos");
+    const contentCollection = client
+      .db("student-affairs")
+      .collection("contents");
     /* 
 to take data form database user (get) method 
 to send data form client site to server site use (post method)
@@ -57,6 +60,15 @@ to delete data use the (delete method)
     app.post("/userInfos", async (req, res) => {
       const userInfo = req.body;
       const result = await userInfosCollection.insertOne(userInfo);
+      res.send(result);
+    });
+    app.get("/contents", async (req, res) => {
+      const result = await contentCollection.find().toArray();
+      res.send(result);
+    });
+    app.post("/contents", async (req, res) => {
+      const contentData = req.body;
+      const result = await contentCollection.insertOne(contentData);
       res.send(result);
     });
 
